@@ -8,7 +8,7 @@
 <h1>
     ${message} 
 </h1>
-<button onclick = "closing()">Testing</button>
+<button onclick = "closing()">Submit</button>
 
 <script>
 function closing() {
