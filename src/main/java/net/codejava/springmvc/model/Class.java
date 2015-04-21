@@ -17,9 +17,7 @@ public class Class {
 	private boolean dayW;
 	private boolean dayTh;
 	private boolean dayF;
-	private Tag tag;
-	
-	public enum Tag { LEC, LAB }
+	private String tag;
 	
 	public String getName() { return name; }
 	
@@ -65,9 +63,9 @@ public class Class {
 	
 	public void setDayF(boolean dayF) { this.dayF = dayF; }
 	
-	public Tag getTag() { return tag; }
+	public String getTag() { return tag; }
 	
-	public void setTag(Tag tag) { this.tag = tag; } /* made my day */
+	public void setTag(String tag) { this.tag = tag; } /* made my day */
 	
 	public String toString() {
 		return "Class [name=" + name + ", numStud=" + numStud + ", teachFirst=" + teachFirst

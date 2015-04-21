@@ -7,7 +7,6 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import net.codejava.springmvc.model.Class;
-import net.codejava.springmvc.model.Class.Tag;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,9 +23,9 @@ public class ClassDaoImpl implements ClassDAO {
     
     public void saveOrUpdate(Class clss) {
     	
-    	if (clss.getName() != "") {
+    	if (clss.getName().isEmpty()) {
     		//update
-    		String sql = "UPDATE class SET numStud=?, teachFirst=?, teachLast=?, "
+    		String sql = "UPDATE classdb SET numStud=?, teachFirst=?, teachLast=?, "
     				+ "timeStart=?, timeEnd=?, dayM=?, dayT=?, dayW=?, dayTh=?, dayF=?, "
     				+ "tag=? WHERE name=?";
     		
@@ -65,9 +64,6 @@ public class ClassDaoImpl implements ClassDAO {
     		public Class mapRow(ResultSet rs, int rowNum) throws SQLException{
     			Class aClass = new Class();
     			
-    			Tag test;
-    			test = Tag.valueOf(rs.getString("tag"));
-    			
     			aClass.setName(rs.getString("name"));
     			aClass.setNumStud(rs.getInt("numStud"));
     			aClass.setTeachFirst(rs.getString("teachFirst"));
@@ -79,7 +75,7 @@ public class ClassDaoImpl implements ClassDAO {
     			aClass.setDayW(rs.getBoolean("dayW"));
     			aClass.setDayTh(rs.getBoolean("dayTh"));
     			aClass.setDayF(rs.getBoolean("dayF"));
-    			aClass.setTag(test);
+    			aClass.setTag(rs.getString("tag"));
     			
     			return aClass;
     		}
@@ -93,7 +89,7 @@ public class ClassDaoImpl implements ClassDAO {
 	@Override
 	public Class get(String name){
 		
-		String sql = "SELECT * FROM classdb WHERE name=" + name;
+		String sql = "SELECT * FROM classdb WHERE name='" + name + "'";
 		return jdbcTemplate.query(sql, new ResultSetExtractor<Class>(){
 			
 			@Override
@@ -103,8 +99,6 @@ public class ClassDaoImpl implements ClassDAO {
 				if (rs.next()){
 					
 					Class clss = new Class();
-					Tag test;
-	    			test = Tag.valueOf(rs.getString("tag"));
 	    			
 	    			clss.setName(rs.getString("name"));
 	    			clss.setNumStud(rs.getInt("numStud"));
@@ -117,7 +111,7 @@ public class ClassDaoImpl implements ClassDAO {
 	    			clss.setDayW(rs.getBoolean("dayW"));
 	    			clss.setDayTh(rs.getBoolean("dayTh"));
 	    			clss.setDayF(rs.getBoolean("dayF"));
-	    			clss.setTag(test);
+	    			clss.setTag(rs.getString("tag"));
 					
 					return clss;
 				}

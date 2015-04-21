@@ -71,8 +71,12 @@ public class HomeController {
 		
 		String className = request.getParameter("name");
 		Class clss = classDAO.get(className);
+		List<String> tagList = new ArrayList<String>();
+		tagList.add("LEC");
+		tagList.add("LAB");
 		ModelAndView model = new ModelAndView("ClassForm");
 		model.addObject("class", clss);
+		model.addObject("tagList", tagList);
 		return model;
 	}
 }

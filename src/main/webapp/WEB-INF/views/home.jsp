@@ -23,24 +23,24 @@
 			<th>LEC:LAB</th>
 			<th>Action</th>
 			
-			<c:forEach var="class" items="${listClass}">
+			<c:forEach var="clss" items="${listClass}">
 			<tr>
-				<td>${class.name}</td>
-				<td>${class.numStud}</td>
-				<td>${class.teachFirst}</td>
-				<td>${class.teachLast}</td>
-				<td>${class.timeStart}</td>
-				<td>${class.timeEnd}</td>
-				<td>${class.dayM}</td>
-				<td>${class.dayT}</td>
-				<td>${class.dayW}</td>
-				<td>${class.dayTh}</td>
-				<td>${class.dayF}</td>
-				<td>${class.tag}</td>
+				<td>${clss.name}</td>
+				<td>${clss.numStud}</td>
+				<td>${clss.teachFirst}</td>
+				<td>${clss.teachLast}</td>
+				<td>${clss.timeStart}</td>
+				<td>${clss.timeEnd}</td>
+				<td>${clss.dayM}</td>
+				<td>${clss.dayT}</td>
+				<td>${clss.dayW}</td>
+				<td>${clss.dayTh}</td>
+				<td>${clss.dayF}</td>
+				<td>${clss.tag}</td>
 				<td>
-					<a href="/editClass?name=${class.name}">Edit</a>
+					<a href="/springmvc/editClass?name=${clss.name}">Edit</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="/deleteClass?name=${class.name}">Delete</a>
+					<a href="/springmvc/deleteClass?name=${clss.name}">Delete</a>
 				</td>
 			</tr>
 			</c:forEach>
