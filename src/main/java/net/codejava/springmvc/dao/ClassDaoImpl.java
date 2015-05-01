@@ -1,5 +1,9 @@
 package net.codejava.springmvc.dao;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -12,6 +16,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.mysql.jdbc.Statement;
 
 public class ClassDaoImpl implements ClassDAO {
 	
@@ -22,29 +29,31 @@ public class ClassDaoImpl implements ClassDAO {
     }
     
     public void saveOrUpdate(Class clss) {
-    	
-    	if (clss.getName().isEmpty()) {
-    		//update
     		String sql = "UPDATE classdb SET numStud=?, teachFirst=?, teachLast=?, "
     				+ "timeStart=?, timeEnd=?, dayM=?, dayT=?, dayW=?, dayTh=?, dayF=?, "
-    				+ "tag=? WHERE name=?";
+    				+ "tag=?, room=? WHERE name=?";
     		
     		jdbcTemplate.update(sql, clss.getNumStud(), clss.getTeachFirst(), clss.getTeachLast(), 
     				clss.getTimeStart(), clss.getTimeEnd(), clss.getDayM(), clss.getDayT(), clss.getDayW(), 
-    				clss.getDayTh(), clss.getDayF(), clss.getTag(), clss.getName());
-    	}
-    	else
-    	{
-    		//insert
-    		String sql = "INSERT INTO classdb (name, numStud, teachFirst, teachLast, timeStart, "
-    				+ "timeEnd, dayM, dayT, dayW, dayTh, dayF, tag)"
-    				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    		
-    		jdbcTemplate.update(sql, clss.getName(), clss.getNumStud(), clss.getTeachFirst(), 
-    				clss.getTeachLast(), clss.getTimeStart(), clss.getTimeEnd(), clss.getDayM(), 
-    				clss.getDayT(), clss.getDayW(), clss.getDayTh(), clss.getDayF(), clss.getTag());
-    	}
-    	
+    				clss.getDayTh(), clss.getDayF(), clss.getTag(), clss.getRoom(), clss.getName());
+    }
+    
+    public void upload(MultipartFile file){
+    		try {
+				Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/classdb", "root", "");
+				Statement statement = (Statement) conn.createStatement();
+				String sql = "LOAD DATA LOCAL INFILE 'test.csv' INTO TABLE classdb FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' IGNORE 1 ROWS";
+				try {
+					statement.setLocalInfileInputStream(file.getInputStream());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				statement.execute(sql);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     }
     
     public void delete(String name){
@@ -76,6 +85,7 @@ public class ClassDaoImpl implements ClassDAO {
     			aClass.setDayTh(rs.getBoolean("dayTh"));
     			aClass.setDayF(rs.getBoolean("dayF"));
     			aClass.setTag(rs.getString("tag"));
+    			aClass.setRoom(rs.getInt("room"));
     			
     			return aClass;
     		}
@@ -112,6 +122,7 @@ public class ClassDaoImpl implements ClassDAO {
 	    			clss.setDayTh(rs.getBoolean("dayTh"));
 	    			clss.setDayF(rs.getBoolean("dayF"));
 	    			clss.setTag(rs.getString("tag"));
+	    			clss.setRoom(rs.getInt("room"));
 					
 					return clss;
 				}

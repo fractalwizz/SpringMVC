@@ -3,7 +3,6 @@ package net.codejava.springmvc;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,10 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.codejava.springmvc.dao.*;
 import net.codejava.springmvc.model.Class;
+import net.codejava.springmvc.model.File;
 
 /**
  * Handles requests for the application home page.
@@ -38,17 +39,20 @@ public class HomeController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/newClass", method = RequestMethod.GET)
-	public ModelAndView newClass(ModelAndView model) {
+	@RequestMapping(value = "/importData", method = RequestMethod.GET)
+	public String importData(Model model) {
 		
-		Class newClass = new Class();
-		List<String> tagList = new ArrayList<String>();
-		tagList.add("LEC");
-		tagList.add("LAB");
-		model.addObject("class", newClass);
-		model.addObject("tagList", tagList);
-		model.setViewName("ClassForm");
-		return model;
+		File fileModel = new File();
+		model.addAttribute("file", fileModel);
+		return "UploadForm";
+	}
+	
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	public ModelAndView upload(ModelAndView model, File file) {
+		MultipartFile multi;
+		multi = file.getFile();
+		classDAO.upload(multi);
+		return new ModelAndView("redirect:/");
 	}
 	
 	@RequestMapping(value = "/saveClass", method = RequestMethod.POST)

@@ -7,20 +7,21 @@
 <body>
 	<div align="center">
 		<h1>Classroom Schedule List</h1>
-		<h3><a href="/springmvc/newClass">New Class</a></h3>
+		<h3><a href="/springmvc/importData">Import CSV</a></h3>
 		<table border="1">
 			<th>Name</th>
-			<th>Number of Students</th>
+			<th># of Students</th>
 			<th>First Name</th>
 			<th>Last Name</th>
 			<th>Start Time</th>
 			<th>End Time</th>
-			<th>Monday</th>
-			<th>Tuesday</th>
-			<th>Wednesday</th>
-			<th>Thursday</th>
-			<th>Friday</th>
+			<th>Mon</th>
+			<th>Tues</th>
+			<th>Wed</th>
+			<th>Thur</th>
+			<th>Fri</th>
 			<th>LEC:LAB</th>
+			<th>Room #</th>
 			<th>Action</th>
 			
 			<c:forEach var="clss" items="${listClass}">
@@ -37,6 +38,7 @@
 				<td>${clss.dayTh}</td>
 				<td>${clss.dayF}</td>
 				<td>${clss.tag}</td>
+				<td>${clss.room}</td>
 				<td>
 					<a href="/springmvc/editClass?name=${clss.name}">Edit</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;

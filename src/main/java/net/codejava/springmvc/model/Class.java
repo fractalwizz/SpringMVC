@@ -18,6 +18,7 @@ public class Class {
 	private boolean dayTh;
 	private boolean dayF;
 	private String tag;
+	private int room;
 	
 	public String getName() { return name; }
 	
@@ -67,9 +68,13 @@ public class Class {
 	
 	public void setTag(String tag) { this.tag = tag; } /* made my day */
 	
+	public int getRoom() { return room; }
+	
+	public void setRoom(int room) { this.room = room; }
+	
 	public String toString() {
 		return "Class [name=" + name + ", numStud=" + numStud + ", teachFirst=" + teachFirst
 				+ ", teachLast=" + teachLast + ", timeStart=" + timeStart + ", timeEnd=" + timeEnd
-				+ ", day=" + dayM + " " + dayT + " " + dayW + " " + dayTh + " " + dayF + ", tag=" + tag + "]";
+				+ ", day=" + dayM + " " + dayT + " " + dayW + " " + dayTh + " " + dayF + ", tag=" + tag + ", room=" + "]";
 	}
 }

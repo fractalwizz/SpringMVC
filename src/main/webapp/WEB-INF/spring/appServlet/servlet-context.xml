@@ -35,9 +35,10 @@
     	<beans:property name="validationQuery" value="SELECT 1"/>
   	</beans:bean>
   	
-  	
   	<beans:bean id="classDAO"
   		class="net.codejava.springmvc.dao.ClassDaoImpl">
   		<beans:constructor-arg ref="myDataSource"></beans:constructor-arg>
   	</beans:bean>
+  	
+  	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 </beans:beans>

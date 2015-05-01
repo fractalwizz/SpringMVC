@@ -5,11 +5,11 @@
 <%@ page session="false" %>
 <html>
 <head>
-<title>New/Edit Class</title>
+<title>Edit Class</title>
 </head>
 <body>
 	<div align="center">
-		<h1>New/Edit Class</h1>
+		<h1>Edit Class</h1>
 		<form:form action="saveClass" method="post" modelAttribute="class">
 			<table>
 				<form:hidden path="class"/>
@@ -47,6 +47,10 @@
 				<tr>
 					<td>LEC/LAB</td>
 					<td><form:select path="tag" items="${tagList}" /></td>
+				</tr>
+				<tr>
+					<td>Room #:</td>
+					<td><form:input path="room" /></td>
 				</tr>
 				<tr>
 					<td colspan="2" align="center"><input type="submit" value="Save" /></td>
