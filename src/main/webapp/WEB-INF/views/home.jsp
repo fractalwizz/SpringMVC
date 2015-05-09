@@ -40,8 +40,8 @@
 				<td>${clss.tag}</td>
 				<td>${clss.room}</td>
 				<td>
-					<a href="/springmvc/editClass?name=${clss.name}">Edit</a>
-					&nbsp;&nbsp;&nbsp;&nbsp;
+					<% /*<a href="/springmvc/editClass?name=${clss.name}">Edit</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;*/ %>
 					<a href="/springmvc/deleteClass?name=${clss.name}">Delete</a>
 				</td>
 			</tr>

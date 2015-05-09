@@ -1,5 +1,9 @@
 package net.codejava.springmvc.dao;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -8,10 +12,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
 import net.codejava.springmvc.model.Class;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -23,6 +29,9 @@ import com.mysql.jdbc.Statement;
 public class ClassDaoImpl implements ClassDAO {
 	
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	public ServletContext servletContext;
 	 
     public ClassDaoImpl(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
@@ -42,7 +51,31 @@ public class ClassDaoImpl implements ClassDAO {
     		try {
 				Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/classdb", "root", "");
 				Statement statement = (Statement) conn.createStatement();
-				String sql = "LOAD DATA LOCAL INFILE 'test.csv' INTO TABLE classdb FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' IGNORE 1 ROWS";
+				/*String [][] test = new String[2][2];
+				test[0][0] = "This";
+				test[0][1] = "is";
+				test[1][0] = "a";
+				test[1][1] = "test";
+				
+				String temp = "";
+				for (int row = 0; row < test.length; row++)
+				{
+					for (int col = 0; col < test[0].length; col++)
+					{
+						temp += " " + test[row][col];
+					}
+					temp += "\n";
+				}
+				
+				http://stackoverflow.com/questions/5200187/convert-inputstream-to-bufferedreader
+				
+				System.out.print(temp);
+				
+				InputStream is = new ByteArrayInputStream(temp.getBytes());
+				InputStream yep = new FileInputStream(servletContext.getRealPath("/WEB-INF/test.csv"));*/
+				
+				String sql = "LOAD DATA LOCAL INFILE 'test.csv' INTO TABLE classdb FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\r\n'";
+				//statement.setLocalInfileInputStream(yep);
 				try {
 					statement.setLocalInfileInputStream(file.getInputStream());
 				} catch (IOException e) {
